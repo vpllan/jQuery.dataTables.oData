@@ -79,8 +79,8 @@
 	<body id="dt_example">
 
 		<div id="container">
-			<a href="index.html">Home</a>
-			<a href="http://code.google.com/p/jquery-datatables-column-filter/wiki/ColumnFilter">Wiki</a> 
+			<!--<a href="index.html">Home</a>
+			<a href="http://code.google.com/p/jquery-datatables-column-filter/wiki/ColumnFilter">Wiki</a>-->
 			<div class="full_width big">
 				JQuery DataTables OData
 			</div>
@@ -129,11 +129,36 @@
 			<div class="spacer"></div>
 			
 			<h1>Initialization code</h1>
-			<p>Initialization code is very simple. </p>
+			<p>Initialization code is very simple. Just specify "fnServerOData" value for "fnServerData" parameter, and define oData service version in "iODataVersion" parameter.</p>
 			<pre>
-			$(document).ready( function () {
-		
+$(document).ready( function () {
+	$('#products1').dataTable({		
+		"sPaginationType": "full_numbers",
+		"aLengthMenu": [[2, 5, 10, -1], ["Two", "Five", "Ten", "All"]],				
+		"bProcessing": true,
+		"bServerSide": true,
+		"sAjaxSource": "http://services.odata.org/V3/OData/OData.svc/Products",
+		"aoColumns": [
+			{ mData: "Name" },
+			{ mData: "Description" },
+			{ mData: "Rating", sType: 'numeric' },
+			{ mData: "Price", sType: 'numeric' },
+			{ sName: "ReleaseDate", sType: 'date',
+			  mData: function(source, type, val) {
+					if (source.ReleaseDate.indexOf("/Date") > -1) {
+						var temp = source.ReleaseDate.substring(6, source.ReleaseDate.length - 2);
+						return new Date(Number(temp));
+					}
+					return source.ReleaseDate;
+				}
+			  
 			}
+		],
+		"fnServerData": fnServerOData,
+		"iODataVersion": 3,
+		"bUseODataViaJSONP": true
+	});
+}
 			</pre>
 			
 			<h1>Other examples</h1>
