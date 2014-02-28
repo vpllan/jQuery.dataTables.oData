@@ -1,0 +1,156 @@
+﻿ <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+		<link rel="shortcut icon" type="image/ico" href="http://www.sprymedia.co.uk/media/images/favicon.ico">
+		
+		<title>Using DataTable with column filter plugin - Basic Example</title>
+		<style type="text/css" title="currentStyle">
+			@import "media/css/demo_page.css";
+			@import "media/css/demo_table.css";
+			@import "media/css/themes/base/jquery-ui.css";
+			@import "media/css/themes/smoothness/jquery-ui-1.7.2.custom.css";
+		</style>
+
+        <script src="media/js/jquery.js" type="text/javascript"></script>
+        <script src="media/js/jquery.dataTables.js" type="text/javascript"></script>
+		<script src="media/js/jquery.dataTables.odata.js" type="text/javascript"></script>
+
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready( function () {
+				
+				$('#products1').dataTable({
+				
+					"sPaginationType": "full_numbers",
+					"aLengthMenu": [[2, 5, 10, -1], ["Two", "Five", "Ten", "All"]],
+					
+					"bProcessing": true,
+					"bServerSide": true,
+
+					"sAjaxSource": "http://services.odata.org/V4/OData/OData.svc/Products",
+					"aoColumns": [
+									{ "mData": "Name" },
+									{ "mData": "Description" },
+									{ "mData": "Rating", sType: 'numeric' },
+									{ "mData": "Price", sType: 'numeric' },
+									{ "mData": "ReleaseDate", sType: 'date' }
+					],
+					"fnServerData": fnServerOData,
+					"iODataVersion": 4,
+					"bUseODataViaJSONP": true
+				});
+				
+				$('#products2').dataTable({
+				
+					"sPaginationType": "full_numbers",
+					"aLengthMenu": [[2, 5, 10, -1], ["Two", "Five", "Ten", "All"]],
+					
+					"bProcessing": true,
+					"bServerSide": false,
+
+					"sAjaxSource": "http://services.odata.org/V4/OData/OData.svc/Products",
+					"aoColumns": [
+									{ mData: "Name" },
+									{ mData: "Description" },
+									{ mData: "Rating", sType: 'numeric' },
+									{ mData: "Price", sType: 'numeric' },
+									{ mData: "ReleaseDate", sType: 'date'
+									}
+					],
+					"fnServerData": fnServerOData,
+					"iODataVersion": 4,
+					"bUseODataViaJSONP": true
+				});
+			} );
+		</script>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-17838786-4']);
+            _gaq.push(['_trackPageview']);
+
+            (function () {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+		</script>
+	</head>
+
+	<body id="dt_example">
+
+		<div id="container">
+			<a href="index.html">Home</a>
+			<a href="http://code.google.com/p/jquery-datatables-column-filter/wiki/ColumnFilter">Wiki</a> 
+			<div class="full_width big">
+				JQuery DataTables OData
+			</div>
+			
+			<h1>Preamble</h1>
+			<p>DataTables OData Integration.</p>
+		
+			<h1>Live example</h1>
+
+			<div id="demo">
+				<h2>With OData Service as server-side processing logic</h2>
+				<p>Filtering on numeric/datetime columns does not work, because there is no efficient way to search by these types using OData URL query.
+				These columns should be marked as numeric or date with sType parameter in DataTable initialization in order to avoid exception that will be thrown
+				by OData service.
+				Search by text columns is case sensitive because this is the way how it is handled by OData service.</p> 
+				<table cellpadding="0" cellspacing="0" border="0" class="display" id="products1">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Rating</th>
+							<th>Price</th>
+							<th>Release date</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+
+				<h2>With OData Service as Ajax source</h2>
+				<p>Fully functional table</p>
+				<table cellpadding="0" cellspacing="0" border="0" class="display" id="products2">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Description</th>
+							<th>Rating</th>
+							<th>Price</th>
+							<th>Release date</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="spacer"></div>
+	
+			<h1>Initialization code</h1>
+			<p>Initialization code is very simple. </p>
+			<pre>
+			$(document).ready( function () {		
+			
+			}
+			</pre>
+			
+			<h1>Other examples</h1>
+			<ul>
+				<li><a href="ODataProductsV4.html">Example for oData v4</a></li>
+				<li><a href="ODataProductsV3.html">Example for oData v3</a></li>
+				<li><a href="ODataProductsV2.html">Example for oData v2</a></li>
+			</ul>
+			
+			<div id="footer" style="text-align:center;">
+				<span style="font-size:10px;">
+					DataTables OData Add-on &copy; Jovan Popovic 2014.<br>
+					DataTables designed and created by <a href="http://www.sprymedia.co.uk">Allan Jardine</a> &copy; 2007-2014<br>
+				</span>
+			</div>
+		</div>
+	</body>
+</html>
