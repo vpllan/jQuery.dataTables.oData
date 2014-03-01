@@ -12,7 +12,7 @@ Steps:
 - Specify location ("sAjaxSource") and version ("iODataVersion") of OData service, and
 - Set value of "fnServerData" parameter to "fnServerOData"
 
-_Example:_
+**Example:**
 
 ```javascript
 $('table#products').dataTable({
@@ -28,7 +28,8 @@ $('table#products').dataTable({
 	"fnServerData": fnServerOData, // required
 	"bServerSide": true,  // optional
 	"bUseODataViaJSONP": true,	// set to true if using cross-domain requests
-});```
+});
+```
 
 Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
 should be set as the value of "fnServerData" parameter.
