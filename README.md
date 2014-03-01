@@ -28,7 +28,7 @@ _Example:_
 		"fnServerData": fnServerOData, // required
 		"bServerSide": true,  // optional
 		"bUseODataViaJSONP": true,	// set to true if using cross-domain requests
-    });
+});
 
 
 Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
