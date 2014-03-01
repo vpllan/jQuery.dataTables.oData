@@ -31,6 +31,8 @@ $('table#products').dataTable({
 });
 ```
 
+_Note: For full example take a look at submitted html pages._
+
 Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
 should be set as the value of "fnServerData" parameter.
 
