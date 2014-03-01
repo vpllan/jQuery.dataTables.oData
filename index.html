@@ -34,7 +34,46 @@
         <h1>
 <a name="jquery-datatables-odata-connector" class="anchor" href="#jquery-datatables-odata-connector"><span class="octicon octicon-link"></span></a>jQuery DataTables oData connector</h1>
 
-<p>jQuery DataTables oData connector supports following oData service versions: v4, v3, and v2. oData version needs to be specified during dataTables initialization (through "iODataVersion" parameter). Also, for cross-domain requests you need to set "bUseODataViaJSONP" to true.</p>
+<p>jQuery DataTables OData connector enables standard jQuery DataTables plugin to display data provided by OData service.
+Beside displaying, it allows you to filter, sort, and navigate through the data. There are several versions of OData services (v4, v3, and v2), which return results in different formats. This connector 
+handles all of these versions (and you simply need to specify a version through "iODataVersion" parameter).</p>
+
+<h2>
+<a name="setup" class="anchor" href="#setup"><span class="octicon octicon-link"></span></a>Setup</h2>
+
+<p>Steps:</p>
+
+<ul>
+<li>Setup jQuery dataTables as you would usually do,</li>
+<li>On top of that include jquery.datatables.odata.js file in your page, </li>
+<li>Specify location ("sAjaxSource") and version ("iODataVersion") of OData service, and</li>
+<li>Set value of "fnServerData" parameter to "fnServerOData"</li>
+</ul><p><strong>Example:</strong></p>
+
+<div class="highlight highlight-javascript"><pre><span class="nx">$</span><span class="p">(</span><span class="s1">'table#products'</span><span class="p">).</span><span class="nx">dataTable</span><span class="p">({</span>
+    <span class="s2">"sAjaxSource"</span><span class="o">:</span> <span class="s2">"http://services.odata.org/V4/OData/OData.svc/Products"</span><span class="p">,</span>
+    <span class="s2">"iODataVersion"</span><span class="o">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s2">"aoColumns"</span><span class="o">:</span> <span class="p">[</span>
+        <span class="p">{</span> <span class="nx">mData</span><span class="o">:</span> <span class="s2">"Name"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">mData</span><span class="o">:</span> <span class="s2">"Description"</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">mData</span><span class="o">:</span> <span class="s2">"Rating"</span><span class="p">,</span> <span class="nx">sType</span><span class="o">:</span> <span class="s1">'numeric'</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">mData</span><span class="o">:</span> <span class="s2">"Price"</span><span class="p">,</span> <span class="nx">sType</span><span class="o">:</span> <span class="s1">'numeric'</span> <span class="p">},</span>
+        <span class="p">{</span> <span class="nx">sName</span><span class="o">:</span> <span class="s2">"ReleaseDate"</span><span class="p">,</span> <span class="nx">sType</span><span class="o">:</span> <span class="s1">'date'</span> <span class="p">}</span>
+    <span class="p">],</span>
+    <span class="s2">"fnServerData"</span><span class="o">:</span> <span class="nx">fnServerOData</span><span class="p">,</span> <span class="c1">// required</span>
+    <span class="s2">"bServerSide"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// optional</span>
+    <span class="s2">"bUseODataViaJSONP"</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>  <span class="c1">// set to true if using cross-domain requests</span>
+<span class="p">});</span>
+</pre></div>
+
+<p><em>Note: For full example take a look at submitted html pages.</em></p>
+
+<p>Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
+should be set as the value of "fnServerData" parameter.</p>
+
+<p>If dataTables is used in server-side processing mode, date columns and numeric columns should be marked as such using "sType" parameter
+(because OData service cannot perform text search against these fields). 
+Also, for cross-domain requests you need to set "bUseODataViaJSONP" parameter value to true.</p>
       </section>
     </div>
 
