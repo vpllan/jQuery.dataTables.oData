@@ -1,7 +1,7 @@
 ﻿/**
  * @summary     DataTables OData addon
  * @description Enables jQuery DataTables plugin to read data from OData service.
- * @version     1.0.0
+ * @version     1.0.1
  * @file        jquery.dataTables.odata.js
  * @authors     Jovan & Vida Popovic
  *
@@ -27,7 +27,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
     var data = {
         "$format": "json",
-        "$callback": "odatatable" + oParams.sEcho
+        "$callback": "odatatable_" + (oSettings.oFeatures.bServerSide?oParams.sEcho:("load_" + Math.floor((Math.random()*1000)+1)  ))
     };
 
     // If OData service is placed on the another domain use JSONP.
@@ -75,7 +75,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
                         // asFilters.push("substringof('" + oParams.sSearch + "', " + sFieldName + ")");
                         // substringof does not work in v4???
-                        asFilters.push("indexof(" + sFieldName + ", '" + oParams.sSearch + "') gt -1");
+                        asFilters.push("indexof(tolower(" + sFieldName + "), '" + oParams.sSearch.toLowerCase() + "') gt -1");
                         break;
 
                     case 'date':
@@ -98,7 +98,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
         "data": data,
         "jsonp": bJSONP,
         "dataType": bJSONP ? "jsonp" : "json",
-        "jsonpCallback": "odatatable" + oParams.sEcho,
+        "jsonpCallback": data["$callback"],
         "cache": false,
         "success": function (data) {
             var oDataSource = {};
@@ -107,7 +107,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
             oDataSource.aaData = data.value || (data.d && data.d.results) || data.d;
             var iCount = (data["@odata.count"] !== null) ? data["@odata.count"] : ((data["odata.count"] !== null) ? data["odata.count"] : ((data.__count !== null) ? data.__count : (data.d && data.d.__count)));
 
-            if (iCount === null) {
+            if (iCount == null) {
                 if (oDataSource.aaData.length === oSettings._iDisplayLength) {
                     oDataSource.iTotalRecords = oSettings._iDisplayStart + oSettings._iDisplayLength + 1;
                 } else {
