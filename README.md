@@ -1,4 +1,4 @@
-#jQuery DataTables oData connector
+#jQuery DataTables OData connector
 
 jQuery DataTables OData connector enables standard jQuery DataTables plugin to display data provided by OData service.
 Beside displaying, it allows you to filter, sort, and navigate through the data. There are several versions of OData services (v4, v3, and v2), which return results in different formats. This connector 
