@@ -15,21 +15,20 @@ Steps:
 _Example:_
 
 ```javascript
-    $('table#products').dataTable({
-		"sAjaxSource": "http://services.odata.org/V4/OData/OData.svc/Products",
-		"iODataVersion": 4,
-		"aoColumns": [
-			{ mData: "Name" },
-			{ mData: "Description" },
-			{ mData: "Rating", sType: 'numeric' },
-			{ mData: "Price", sType: 'numeric' },
-			{ sName: "ReleaseDate", sType: 'date' }
-		],
-		"fnServerData": fnServerOData, // required
-		"bServerSide": true,  // optional
-		"bUseODataViaJSONP": true,	// set to true if using cross-domain requests
-    });
-'''
+$('table#products').dataTable({
+	"sAjaxSource": "http://services.odata.org/V4/OData/OData.svc/Products",
+	"iODataVersion": 4,
+	"aoColumns": [
+		{ mData: "Name" },
+		{ mData: "Description" },
+		{ mData: "Rating", sType: 'numeric' },
+		{ mData: "Price", sType: 'numeric' },
+		{ sName: "ReleaseDate", sType: 'date' }
+	],
+	"fnServerData": fnServerOData, // required
+	"bServerSide": true,  // optional
+	"bUseODataViaJSONP": true,	// set to true if using cross-domain requests
+});```
 
 Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
 should be set as the value of "fnServerData" parameter.
