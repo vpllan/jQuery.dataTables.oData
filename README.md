@@ -7,13 +7,14 @@ handles all of these versions (and you simply need to specify a version through 
 ## Setup
 
 Steps:
-- Include jquery.datatables.odata.js file in your page, 
+- Setup jQuery dataTables as you would usually do,
+- On top of that include jquery.datatables.odata.js file in your page, 
 - Specify location ("sAjaxSource") and version ("iODataVersion") of OData service, and
 - Set value of "fnServerData" parameter to "fnServerOData"
-- Specify the names of the properties that should be displayed in the table columns (either by using "mData" or "sName" parameter).
+
+*Example:*
 
 $('table#products').dataTable({
-		
 		"sAjaxSource": "http://services.odata.org/V4/OData/OData.svc/Products",
 		"iODataVersion": 4,
 		"aoColumns": [
@@ -24,11 +25,9 @@ $('table#products').dataTable({
 			{ sName: "ReleaseDate", sType: 'date' }
 		],
 		"fnServerData": fnServerOData, // required
-
 		"bServerSide": true,  // optional
 		"bUseODataViaJSONP": true,	// set to true if using cross-domain requests
-		
-	});
+});
 
 Functionality for connecting to OData service is placed in the fnServerOData function defined in jquery.datatables.odata.js. This function
 should be set as the value of "fnServerData" parameter.
