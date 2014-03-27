@@ -26,12 +26,15 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
     });
 
     var data = {
-        "$format": "json",
-        "$callback": "odatatable_" + (oSettings.oFeatures.bServerSide?oParams.sEcho:("load_" + Math.floor((Math.random()*1000)+1)  ))
+        "$format": "json"
     };
 
     // If OData service is placed on the another domain use JSONP.
     var bJSONP = oSettings.oInit.bUseODataViaJSONP;
+
+    if (bJSONP) {
+        data.$callback = "odatatable_" + (oSettings.oFeatures.bServerSide ? oParams.sEcho : ("load_" + Math.floor((Math.random() * 1000) + 1)));
+    }
 
     $.each(oSettings.aoColumns, function (i, value) {
         var sFieldName = (value.sName !== null && value.sName !== "") ? value.sName : ((typeof value.mData === 'string') ? value.mData : null);
