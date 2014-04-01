@@ -92,7 +92,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
         var asOrderBy = [];
         for (var i = 0; i < oParams.iSortingCols; i++) {
-            asOrderBy.push(oParams["mDataProp_" + oParams["iSortCol_" + i]] + " " + (oParams["sSortDir_" + oParams["iSortCol_" + i]] || ""));
+			asOrderBy.push(oParams["mDataProp_" + oParams["iSortCol_" + i]] + " " + (oParams["sSortDir_" + i] || ""));
         }
         data.$orderby = asOrderBy.join();
     }
