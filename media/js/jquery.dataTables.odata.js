@@ -108,7 +108,7 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
             // Probe data structures for V4, V3, and V2 versions of OData response
             oDataSource.aaData = data.value || (data.d && data.d.results) || data.d;
-            var iCount = (data["@odata.count"] !== null) ? data["@odata.count"] : ((data["odata.count"] !== null) ? data["odata.count"] : ((data.__count !== null) ? data.__count : (data.d && data.d.__count)));
+            var iCount = (data["@odata.count"]) ? data["@odata.count"] : ((data["odata.count"]) ? data["odata.count"] : ((data.__count) ? data.__count : (data.d && data.d.__count)));
 
             if (iCount == null) {
                 if (oDataSource.aaData.length === oSettings._iDisplayLength) {
