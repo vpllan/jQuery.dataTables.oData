@@ -18,7 +18,7 @@
  * 
  */
  
-function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
+function fnServerOData(sUrl, aoData, fnCallback, oSettings, ajaxSettingOverrides) {
 
     var oParams = {};
     $.each(aoData, function (i, value) {
@@ -88,7 +88,10 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
                     }
                 }
             });
-        data.$filter = asFilters.join(" or ");
+			
+        if (asFilters.length > 0) {
+            data.$filter = asFilters.join(" or ");
+        }
 
         var asOrderBy = [];
         for (var i = 0; i < oParams.iSortingCols; i++) {
@@ -96,7 +99,8 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
         }
         data.$orderby = asOrderBy.join();
     }
-    $.ajax({
+	
+	var ajaxSettings = {
         "url": sUrl,
         "data": data,
         "jsonp": bJSONP,
@@ -124,6 +128,10 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
             fnCallback(oDataSource);
         }
-    });
+    };
+	
+    //take ajaxSettings and then merge it with ajaxSettingOverrides (purposefully a shallow merge as it's more predictable - it does not compare nested objects)
+	$.extend(ajaxSettings, ajaxSettingOverrides);
 
+    $.ajax(ajaxSettings);
 } // end fnServerData
