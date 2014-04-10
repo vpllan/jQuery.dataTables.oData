@@ -88,7 +88,10 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
                     }
                 }
             });
-        data.$filter = asFilters.join(" or ");
+			
+        if (asFilters.length > 0) {
+            data.$filter = asFilters.join(" or ");
+        }
 
         var asOrderBy = [];
         for (var i = 0; i < oParams.iSortingCols; i++) {
