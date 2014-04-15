@@ -1,7 +1,7 @@
 ﻿/**
  * @summary     DataTables OData addon
  * @description Enables jQuery DataTables plugin to read data from OData service.
- * @version     1.0.1
+ * @version     1.0.2
  * @file        jquery.dataTables.odata.js
  * @authors     Jovan & Vida Popovic
  *
@@ -88,13 +88,19 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
                     }
                 }
             });
-        data.$filter = asFilters.join(" or ");
+        
+        if (asFilters.length > 0) {
+            data.$filter = asFilters.join(" or ");
+        }
 
         var asOrderBy = [];
         for (var i = 0; i < oParams.iSortingCols; i++) {
 			asOrderBy.push(oParams["mDataProp_" + oParams["iSortCol_" + i]] + " " + (oParams["sSortDir_" + i] || ""));
         }
-        data.$orderby = asOrderBy.join();
+		
+        if (asOrderBy.length > 0) {
+            data.$orderby = asOrderBy.join();
+        }
     }
     $.ajax({
         "url": sUrl,
