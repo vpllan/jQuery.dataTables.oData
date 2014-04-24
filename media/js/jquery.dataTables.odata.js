@@ -17,7 +17,7 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the license files for details.
  * 
  */
- 
+
 function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
 
     var oParams = {};
@@ -66,10 +66,12 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
         }
 
         var asFilters = [];
+        var asColumnFilters = []; //used for jquery.dataTables.columnFilter.js
         $.each(oSettings.aoColumns,
             function (i, value) {
 
                 var sFieldName = value.sName || value.mData;
+                var columnFilter = oParams["sSearch_" + i]; //fortunately columnFilter's _number matches the index of aoColumns
 
                 if (oParams.sSearch !== null && oParams.sSearch !== "" && value.bSearchable) {
                     switch (value.sType) {
@@ -87,10 +89,26 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
                         // Currently, we cannot search date and numeric fields (exception on the OData service side)
                     }
                 }
+
+                /*  This currently does not exclude 'number' and 'date' passed via jquery.dataTables.columnFilter
+                    The simplest workaround is to use { type: null } in the columnFilter plugin to exclude it. 
+                    This isn't a bad thing, as it is better to explicitly exlude it so that the user doesn't see the UI for the column filter.
+                */
+                if (columnFilter !== null && columnFilter !== "") {
+                    asColumnFilters.push("indexof(tolower(" + sFieldName + "), '" + columnFilter.toLowerCase() + "') gt -1");
+                }
             });
-        
+
         if (asFilters.length > 0) {
             data.$filter = asFilters.join(" or ");
+        }
+
+        if (asColumnFilters.length > 0) {
+            if (data.$filter !== undefined) {
+                data.$filter = " ( " + data.$filter + " ) and ( " + asColumnFilters.join(" and ") + " ) ";
+            } else {
+                data.$filter = asColumnFilters.join(" and ");
+            }
         }
 
         var asOrderBy = [];
