@@ -82,11 +82,11 @@ function fnServerOData(sUrl, aoData, fnCallback, oSettings) {
                         {
                             // asFilters.push("substringof('" + oParams.sSearch + "', " + sFieldName + ")");
                             // substringof does not work in v4???
-                            asFilters.push("indexof(tolower(" + sFieldName + "), '" + oParams.sSearch.toLowerCase() + "') gt -1");
+                            asFilters.push("indexof(tolower(" + sFieldName + "), '" + oParams.sSearch.toLowerCase().replace(/'/g, "''") + "') gt -1");
                         }
 
                         if (columnFilter !== null && columnFilter !== "") {
-                            asColumnFilters.push("indexof(tolower(" + sFieldName + "), '" + columnFilter.toLowerCase() + "') gt -1");
+                            asColumnFilters.push("indexof(tolower(" + sFieldName + "), '" + columnFilter.toLowerCase().replace(/'/g, "''") + "') gt -1");
                         }
                         break;
 
