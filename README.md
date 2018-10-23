@@ -4,6 +4,10 @@ jQuery DataTables OData connector enables standard jQuery DataTables plugin to d
 Beside displaying, it allows you to filter, sort, and navigate through the data. There are several versions of OData services (v4, v3, and v2), which return results in different formats. This connector 
 handles all of these versions (and you simply need to specify a version through "iODataVersion" parameter).
 
+## Install
+NPM-install  ===>  npm install --save jquery-datatables-odata
+
+   
 ## Setup
 
 Steps:
