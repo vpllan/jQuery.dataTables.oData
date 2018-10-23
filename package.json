@@ -1,0 +1,25 @@
+{
+	"name": "jquery-datatables-odata",
+	"version": "1.0.0",
+	"title": "jQuery-dataTables-oData-Connector",
+	"main": "media/js/jquery.dataTables.odata.js",
+	"description": "jQuery DataTables OData connector enables standard jQuery DataTables plugin to display data provided by OData service. Beside displaying, it allows you to filter, sort, and navigate through the data. There are several versions of OData services (v4, v3, and v2), which return results in different formats. This connector handles all of these versions (and you simply need to specify a version through 'iODataVersion' parameter).",
+	"keywords": [
+		"DataTables",
+		"DataTable",
+		"ad-on",
+		"adon",
+		"oData",
+		"OData",
+		"DataTable-OData",
+		"jquery-plugin",
+		"jquery-plugin-DataTable-OData",
+		"ODataConnector",
+		"OData-Connector"
+	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/vpllan/jQuery.dataTables.oData.git"
+	},
+	"license": "ISC"
+}
